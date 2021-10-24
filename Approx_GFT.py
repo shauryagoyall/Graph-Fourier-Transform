@@ -22,16 +22,15 @@ def get_sparse(laplacian, dim):
 
 #np.random.seed(0)
 
-import time #to measure time taken
+import time 
 # laplacian = np.array([[1,2,3, 4 , 6],[2,9,4, 23, 9],[0,-20,-18, 15, 1], [123,734, 63, 1, 7],[234, 85, 34, 8, 0]], float)
-laplacian = np.random.rand(100,100) #makes a random 5 x 5 matrix
+laplacian = np.random.rand(100,100) #makes a random matrix
 n = np.shape(laplacian)[0]    #find dimension of laplacian 
 order  = 2     #for J
 J = order*n*math.log(n) #taking J to be of order n log n
-print("\nJ is currently", J)
-# J = n^(a) ##   a<2  we can also take J to be of this form
+# J = n^(a) ##   a<2   J can also be taken of this form
 L = laplacian
-a = time.time()  #to measure time taken
+start = time.time()  
 sparse_list = [] 
 for j in range(math.floor(J)): #we take the integer value of J ie. if J = 4.67 then floor(J) will be 4   range(n) starts from 0 to n-1 so a total of n iterations 
     S = get_sparse(L, n)
@@ -40,18 +39,12 @@ for j in range(math.floor(J)): #we take the integer value of J ie. if J = 4.67 t
     sparse_list.append(S)
 
 diagonal_elem = np.diag(L) #take only diagonal terms of L in a single 1d array
-#print(diagonal_elem)
 idx = diagonal_elem.argsort()[::] 
 diagonal_elem = diagonal_elem[idx]
-#print(diagonal_elem)
-L = np.diag(diagonal_elem) 
-# print("\n\n",L)
+L = np.diag(diagonal_elem) #makes L, a diagonal matrix
 sparse_list.pop()
-#print("\n\n",S)
-S=S[:,idx]
-#print("\n\n",S)
+S=S[:,idx] #reorder columns of S as per idx
 sparse_list.append(S)
 
-
-b = time.time() #to measure time taken
-print("\n\nTimes taken is", b - a) #to measure time taken 
+end = time.time() #to measure time taken
+print("\n\nTimes taken is", end - start) #to measure time taken 
