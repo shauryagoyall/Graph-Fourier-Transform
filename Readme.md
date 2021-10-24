@@ -2,6 +2,6 @@
 
 This repository contains the python code I had written while working on the approximate fast graph fourier transform.
 
-The code is based off the paper "Approximate fast graph Fourier transforms via multi-layer sparse approximations" by Magoarou et. al. [arXiv:1612.04542](https://arxiv.org/abs/1612.04542v3). 
+The code is based off the paper "Approximate fast graph Fourier transforms via multi-layer sparse approximations" by Magoarou et al. (2017) [arXiv:1612.04542](https://arxiv.org/abs/1612.04542v3). 
 
 Approx_GFT.py corresponds to figure 2 and Parallel_Approx_GFT.py corresponds to figure 4 in the paper respectively.
