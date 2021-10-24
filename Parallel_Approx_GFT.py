@@ -14,7 +14,7 @@ def get_sparse(laplacian, dim):
    idx = non_zero.argsort()[::-1] 
    non_zero = non_zero[idx]
    pop=pop[idx]
-   nos = [0]*sq
+   nos = [0]*sq #to check individual supports. index ordering in this list corresponds to index in matrix
    S = np.zeros((dim, dim)) #form a dim x dim matrix with only zeroes
    np.fill_diagonal(S, 1) # add ones on the diagonal 
    n = math.floor(dim/2)
@@ -23,8 +23,8 @@ def get_sparse(laplacian, dim):
        for l in range(len(pop)):
            
            p, q = (pop[l])[0], (pop[l])[1]
-           if (nos[p]==0 and nos[q]==0):
-               nos[p] = 1
+           if (nos[p]==0 and nos[q]==0): #if both the indices in nos are 0, that means that the support is independent
+               nos[p] = 1  #to keep track of which index the givens rotation will act upon
                nos[q] = 1
                numer = (laplacian[q][q] - laplacian[p][p])  #as per figure 3 ie the optimization subproblem
                denom = 2*laplacian[p][q]
