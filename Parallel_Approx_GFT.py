@@ -1,9 +1,9 @@
-#matlab starts iteration at 1 but pytrhon does it at 0. so all the code here works like that
+#matlab starts iteration at 1 but python does it at 0. so all the code here works like that
 import numpy as np
 import math
 
 sq = 200 #no of rows & columns of square matrix
-# sq = 5  #if using the matrix I have defined
+
 def get_sparse(laplacian, dim):
    
    lowertri = np.tril(laplacian) #convert laplacian to lower triangle to apply givens
@@ -12,13 +12,8 @@ def get_sparse(laplacian, dim):
    pop = np.argwhere(lowertri!=0)
    non_zero = lowertri[np.nonzero(lowertri)]
    idx = non_zero.argsort()[::-1] 
-   #print(lowertri)
-   #print("\n\n-------------------\n",non_zero)
-   #print(pop)
    non_zero = non_zero[idx]
    pop=pop[idx]
-   #print("-------------------\n",non_zero)
-   #print(pop)
    nos = [0]*sq
    S = np.zeros((dim, dim)) #form a dim x dim matrix with only zeroes
    np.fill_diagonal(S, 1) # add ones on the diagonal 
@@ -42,22 +37,22 @@ def get_sparse(laplacian, dim):
    
    return S 
 
-np.random.seed(0)
+#np.random.seed(0)
 
-import time #to measure time taken
+import time 
 # laplacian = np.array([[1,2,-3,4,6],[2,9,4, 23, 9],[0,-20,-18, 15, 1], [123,734, -63, 1, 7],[-234, 85, 34, 8, 0]], float)
-laplacian = np.random.rand(sq,sq) #makes a random 5 x 5 matrix
+laplacian = np.random.rand(sq,sq) 
 n = np.shape(laplacian)[0]    #find dimension of laplacian 
 order  = 2     #for J
 J = order*n*math.log(n) #taking J to be of order n log n
 print("\nJ is currently\n\n", J)
-# J = n^(a) ##   a<2  we can also take J to be of this form
+# J = n^(a) ##   a<2   J can be taken to be of this form
 L = laplacian
-a = time.time()  #to measure time taken
+start = time.time()  #to measure time taken
 sparse_list = [] 
 j=0
 k =1
-while j < math.floor(J): #we take the integer value of J ie. if J = 4.67 then floor(J) will be 4   range(n) starts from 0 to n-1 so a total of n iterations 
+while j < math.floor(J): #taking integer value of J ie. if J = 4.67 then floor(J) will be 4   range(n) starts from 0 to n-1 so a total of n iterations 
     S = get_sparse(L, n)
     S1 = S.transpose()
     L = S1@L@S # the @ sign is for matrix multiplication
@@ -67,21 +62,16 @@ while j < math.floor(J): #we take the integer value of J ie. if J = 4.67 then fl
 K = k
 
 diagonal_elem = np.diag(L) #take only diagonal terms of L in a single 1d array
-#print(diagonal_elem)
 idx = diagonal_elem.argsort()[::] 
 diagonal_elem = diagonal_elem[idx]
-#print(diagonal_elem)
-L = np.diag(diagonal_elem) 
-#print("\n\nApprox. diagonalized L after rearrangement\n",L)
+L = np.diag(diagonal_elem) #construct L, a diagonal matrix
 sparse_list.pop()
-#print("\n\nSk before reaarangement\n",S)
-S=S[:,idx]
-#print("\n\nSk after reaarangement\n",S)
+S=S[:,idx] #reorder columns of S as per idx
 sparse_list.append(S)
 
 
-b = time.time() #to measure time taken
-print("\n\nTimes taken is", b - a) #to measure time taken
+end = time.time() 
+print("\n\nTimes taken is", end - start) 
 
 print("j is", j)
 print("K is", K)
