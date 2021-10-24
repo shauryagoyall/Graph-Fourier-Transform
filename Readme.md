@@ -1,6 +1,6 @@
 # Implementation of approx GFT
 
-This repository contains the python code I had written while working with the approximate fast graph fourier transform.
+This repository contains the python code I had written while working on the approximate fast graph fourier transform.
 
 The code is based off the paper "Approximate fast graph Fourier transforms via multi-layer sparse approximations" by Magoarou et. al. [arXiv:1612.04542](https://arxiv.org/abs/1612.04542v3). 
 
